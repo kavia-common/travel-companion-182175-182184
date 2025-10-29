@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './core/layout/header.component';
+import { FooterComponent } from './core/layout/footer.component';
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  standalone: true,
+  imports: [RouterOutlet, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'travel_app_frontend is being generated';
+  // PUBLIC_INTERFACE
+  title = 'Travel Companion';
 }
