@@ -20,11 +20,17 @@ export const appConfig: ApplicationConfig = {
         const supabaseUrl = environment.supabaseUrl;
         const supabaseKey = environment.supabaseKey;
 
-        if (!supabaseUrl || !supabaseKey) {
-          // Do not throw here to allow the app to render; the client factory will throw when used.
-          console.warn(
-            'Supabase env variables are not set. Set NG_APP_SUPABASE_URL and NG_APP_SUPABASE_KEY in your .env or environment.',
-          );
+        const isBrowser = typeof globalThis !== 'undefined' && typeof (globalThis as any).window !== 'undefined';
+        // Minimal diagnostics once on boot
+        try {
+          const src = isBrowser ? 'browser-global/window' : 'process.env';
+          if (!supabaseUrl || !supabaseKey) {
+            console.warn(`[Supabase] Missing credentials from ${src}. Ensure NG_APP_SUPABASE_URL and NG_APP_SUPABASE_KEY are set.`);
+          } else {
+            console.info('[Supabase] Credentials detected from', src);
+          }
+        } catch {
+          // silent
         }
 
         return {

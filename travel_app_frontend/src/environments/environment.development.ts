@@ -1,12 +1,41 @@
 import type { Environment } from './environment';
 
 /**
+ * Resolve environment variables in both browser and SSR:
+ * - In browser, read from globalThis (e.g., window.NG_APP_SUPABASE_URL) which can be injected at runtime by host.
+ * - In SSR/Node, read from process.env.
+ */
+function readEnvVar(name: string): string | undefined {
+  try {
+    const g: any = typeof globalThis !== 'undefined' ? globalThis : undefined;
+    // Prefer browser globals if available
+    if (g && typeof g === 'object' && typeof g.window !== 'undefined') {
+      const w = g.window as any;
+      if (w && typeof w[name] === 'string' && w[name]) {
+        return w[name] as string;
+      }
+      if (typeof (g as any)[name] === 'string' && (g as any)[name]) {
+        return (g as any)[name] as string;
+      }
+    }
+    // Fallback to process.env for SSR/Node
+    if (typeof process !== 'undefined' && (process as any).env) {
+      const v = ((process as any).env as any)[name];
+      if (typeof v === 'string' && v) return v as string;
+    }
+  } catch {
+    // ignore and return undefined
+  }
+  return undefined;
+}
+
+/**
  * PUBLIC_INTERFACE
  * Development environment configuration.
- * Reads NG_APP_SUPABASE_URL and NG_APP_SUPABASE_KEY from the environment.
+ * Reads NG_APP_SUPABASE_URL and NG_APP_SUPABASE_KEY via cross-env utility.
  */
 export const environment: Environment = {
   production: false,
-  supabaseUrl: (typeof process !== 'undefined' && process?.env && (process.env as any)['NG_APP_SUPABASE_URL']) || undefined,
-  supabaseKey: (typeof process !== 'undefined' && process?.env && (process.env as any)['NG_APP_SUPABASE_KEY']) || undefined,
+  supabaseUrl: readEnvVar('NG_APP_SUPABASE_URL'),
+  supabaseKey: readEnvVar('NG_APP_SUPABASE_KEY'),
 };

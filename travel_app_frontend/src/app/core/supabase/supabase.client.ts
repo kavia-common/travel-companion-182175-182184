@@ -10,8 +10,9 @@ import { SUPABASE_CLIENT, SUPABASE_CONFIG, type SupabaseConfig } from './supabas
 export async function createSupabaseClient() {
   const cfg = inject(SUPABASE_CONFIG) as SupabaseConfig;
 
-  // Detect SSR/prerender build environment (no window and process.env likely unavailable)
-  const isNodeLike = typeof globalThis !== 'undefined' && typeof (globalThis as any).window === 'undefined';
+  // Detect SSR/prerender build environment (no window) vs browser
+  const isBrowser = typeof globalThis !== 'undefined' && typeof (globalThis as any).window !== 'undefined';
+  const isNodeLike = !isBrowser;
 
   if (!cfg?.supabaseUrl || !cfg?.supabaseKey) {
     if (isNodeLike) {
