@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ButtonComponent } from '../shared/ui/button.component';
 import { RouterLink } from '@angular/router';
+import { StateWrapperComponent } from '../shared/ui/state-wrapper.component';
 
 /**
  * PUBLIC_INTERFACE
@@ -8,13 +9,15 @@ import { RouterLink } from '@angular/router';
  */
 @Component({
   standalone: true,
-  imports: [ButtonComponent, RouterLink],
+  imports: [ButtonComponent, RouterLink, StateWrapperComponent],
   template: `
-    <section class="not-found">
-      <h1>404</h1>
-      <p>We couldn’t find the page you’re looking for.</p>
-      <ui-button routerLink="/" variant="primary">Go Home</ui-button>
-    </section>
+    <ui-state-wrapper [loading]="false" [error]="false" [empty]="false">
+      <section class="not-found">
+        <h1>404</h1>
+        <p>We couldn’t find the page you’re looking for.</p>
+        <ui-button routerLink="/" variant="primary">Go Home</ui-button>
+      </section>
+    </ui-state-wrapper>
   `,
   styles: [`
     .not-found {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CardComponent } from '../shared/ui/card.component';
+import { StateWrapperComponent } from '../shared/ui/state-wrapper.component';
 
 /**
  * PUBLIC_INTERFACE
@@ -8,11 +9,13 @@ import { CardComponent } from '../shared/ui/card.component';
  */
 @Component({
   standalone: true,
-  imports: [CardComponent],
+  imports: [CardComponent, StateWrapperComponent],
   template: `
-    <ui-card [title]="'Destination ' + (id ?? '')">
-      <p>Coming soon: destination insights, highlights, and activities.</p>
-    </ui-card>
+    <ui-state-wrapper [loading]="false" [error]="false" [empty]="false">
+      <ui-card [title]="'Destination ' + (id ?? '')">
+        <p>Coming soon: destination insights, highlights, and activities.</p>
+      </ui-card>
+    </ui-state-wrapper>
   `
 })
 export class DestinationPageComponent {
