@@ -4,8 +4,8 @@ import { AuthStore } from '../store/auth.store';
 
 /**
  * PUBLIC_INTERFACE
- * AuthGuard checks if a user is authenticated.
- * - If session is unknown, tries to load it.
+ * AuthGuard checks if a user is authenticated by consulting AuthStore.
+ * - If session is unknown, it loads session via AuthStore.loadSession() once.
  * - If not authenticated, redirects to '/' and blocks navigation.
  */
 export const AuthGuard: CanActivateFn = async () => {
