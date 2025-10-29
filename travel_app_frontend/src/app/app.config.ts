@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -6,6 +6,7 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { environment } from '../environments/environment';
 import { SUPABASE_CONFIG } from './core/supabase/supabase.tokens';
 import { provideSupabaseClient } from './core/supabase/supabase.client';
+import { GlobalErrorHandler } from './core/errors/error-handler';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,5 +34,7 @@ export const appConfig: ApplicationConfig = {
       },
     },
     provideSupabaseClient(),
+    // Global error handling -> toasts
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
   ],
 };

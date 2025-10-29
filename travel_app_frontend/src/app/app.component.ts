@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './core/layout/header.component';
 import { FooterComponent } from './core/layout/footer.component';
 import { AuthStore } from './core/store/auth.store';
+import { ToastContainerComponent } from './shared/ui/toast-container.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, ToastContainerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
