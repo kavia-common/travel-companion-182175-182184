@@ -2,6 +2,45 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
 
+## Environment variables
+
+This app reads Supabase credentials from environment variables:
+
+- `NG_APP_SUPABASE_URL`: Your Supabase project URL (e.g., https://xyzcompany.supabase.co)
+- `NG_APP_SUPABASE_KEY`: Your Supabase anon/public key
+
+Create a `.env` file at the project root (same directory as `package.json`) or set variables in your shell. See `.env.example` for a template.
+
+Example `.env`:
+
+```
+NG_APP_SUPABASE_URL=https://your-project.supabase.co
+NG_APP_SUPABASE_KEY=your-anon-or-service-role-key
+```
+
+Notes:
+- Do not commit real keys. Use `.env` locally and CI secrets in pipelines.
+- The DI token `SUPABASE_CLIENT` is provided app-wide. You can inject it in any service/component.
+
+## Supabase client usage
+
+Inject the client using Angular DI:
+
+```ts
+import { Component, inject } from '@angular/core';
+import { SUPABASE_CLIENT } from './app/core/supabase/supabase.tokens';
+
+@Component({
+  standalone: true,
+  template: `...`
+})
+export class Example {
+  private supabase = inject(SUPABASE_CLIENT);
+}
+```
+
+If the variables are not configured, the factory will throw a helpful error when the client is first used.
+
 ## Development server
 
 To start a local development server, run:
@@ -10,7 +49,7 @@ To start a local development server, run:
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Once the server is running, open your browser and navigate to `http://localhost:3000/`. The application will automatically reload whenever you modify any of the source files.
 
 ## Code scaffolding
 

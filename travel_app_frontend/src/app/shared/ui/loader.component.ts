@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 /**
  * PUBLIC_INTERFACE
@@ -7,6 +8,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'ui-loader',
   standalone: true,
+  imports: [CommonModule],
   template: `
     <div class="loader" [style.--size.px]="size">
       <div class="spinner"></div>

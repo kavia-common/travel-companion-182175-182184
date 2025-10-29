@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { StateWrapperComponent } from '../shared/ui/state-wrapper.component';
-import { EmptyStateComponent } from '../shared/ui/empty-state.component';
 
 /**
  * PUBLIC_INTERFACE
@@ -8,7 +7,7 @@ import { EmptyStateComponent } from '../shared/ui/empty-state.component';
  */
 @Component({
   standalone: true,
-  imports: [StateWrapperComponent, EmptyStateComponent],
+  imports: [StateWrapperComponent],
   template: `
     <ui-state-wrapper [loading]="false" [error]="false" [empty]="true" [emptyTitle]="'Search trips'" [emptyDescription]="'Search UI will appear here soon.'">
       <section class="stack">
