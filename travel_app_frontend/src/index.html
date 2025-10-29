@@ -6,6 +6,70 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Runtime-configurable Supabase credentials (meta fallback).
+       These can be populated by the hosting environment (e.g., static host rewrites)
+       without rebuilding the app. The inline script below will read from:
+       1) SSR-injected process.env (if available in prerender/SSR),
+       2) window.* (already present),
+       3) meta tags (this section),
+       and assign window.NG_APP_SUPABASE_URL/KEY for the Angular app to consume. -->
+  <meta name="ng-app-supabase-url" content="">
+  <meta name="ng-app-supabase-key" content="">
+
+  <script>
+    (function runtimeEnvInjector() {
+      try {
+        var g = (typeof globalThis !== 'undefined') ? globalThis : (typeof window !== 'undefined' ? window : {});
+        var w = (typeof g.window !== 'undefined') ? g.window : g;
+
+        // Helper to safely read meta[name=...] content
+        function readMeta(name) {
+          try {
+            var el = (typeof document !== 'undefined') ? document.querySelector('meta[name="' + name + '"]') : null;
+            var val = el && el.getAttribute('content');
+            return (typeof val === 'string' && val.trim()) ? val.trim() : undefined;
+          } catch (_) { return undefined; }
+        }
+
+        // Read from process.env (SSR) if available
+        var env = (typeof process !== 'undefined' && process && process.env) ? process.env : {};
+        var fromEnvUrl = env && typeof env['NG_APP_SUPABASE_URL'] === 'string' ? env['NG_APP_SUPABASE_URL'] : undefined;
+        var fromEnvKey = env && typeof env['NG_APP_SUPABASE_KEY'] === 'string' ? env['NG_APP_SUPABASE_KEY'] : undefined;
+
+        // Read from existing globals if already present
+        var fromWinUrl = typeof w.NG_APP_SUPABASE_URL === 'string' ? w.NG_APP_SUPABASE_URL : undefined;
+        var fromWinKey = typeof w.NG_APP_SUPABASE_KEY === 'string' ? w.NG_APP_SUPABASE_KEY : undefined;
+
+        // Meta fallback
+        var fromMetaUrl = readMeta('ng-app-supabase-url');
+        var fromMetaKey = readMeta('ng-app-supabase-key');
+
+        // Assign in priority order: window -> env -> meta
+        if (!fromWinUrl) {
+          w.NG_APP_SUPABASE_URL = fromEnvUrl || fromMetaUrl || w.NG_APP_SUPABASE_URL || '';
+        }
+        if (!fromWinKey) {
+          w.NG_APP_SUPABASE_KEY = fromEnvKey || fromMetaKey || w.NG_APP_SUPABASE_KEY || '';
+        }
+
+        // Optional: lightweight one-time diagnostic
+        var urlSet = !!w.NG_APP_SUPABASE_URL;
+        var keySet = !!w.NG_APP_SUPABASE_KEY;
+        if (!urlSet || !keySet) {
+          var looked = [];
+          if (fromWinUrl || fromWinKey) looked.push('window');
+          if (fromEnvUrl || fromEnvKey) looked.push('process.env');
+          if (fromMetaUrl || fromMetaKey) looked.push('meta');
+          try {
+            console.warn('[Supabase Runtime Config] Missing values (url? ' + urlSet + ', key? ' + keySet + '). Checked:', looked.join(', ') || 'none');
+          } catch (_) { /* ignore */ }
+        }
+      } catch (e) {
+        try { console.warn('[Supabase Runtime Config] Injector encountered an error:', e); } catch (_) {}
+      }
+    })();
+  </script>
 </head>
 <body>
   <app-root></app-root>
