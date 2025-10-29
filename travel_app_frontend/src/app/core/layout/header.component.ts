@@ -17,11 +17,17 @@ import { ButtonComponent } from '../../shared/ui/button.component';
       <div class="container">
         <a class="brand" routerLink="/">Travel Companion</a>
 
-        <button class="nav-toggle" (click)="toggleMobileNav()" aria-label="Toggle navigation">
+        <button
+          class="nav-toggle"
+          (click)="toggleMobileNav()"
+          aria-label="Toggle navigation"
+          [attr.aria-expanded]="mobileOpen"
+          aria-controls="primary-navigation"
+        >
           <span></span><span></span><span></span>
         </button>
 
-        <nav [class.open]="mobileOpen">
+        <nav [class.open]="mobileOpen" id="primary-navigation">
           <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
           <a routerLink="/search" routerLinkActive="active">Search</a>
           <a routerLink="/itineraries" routerLinkActive="active">Itineraries</a>

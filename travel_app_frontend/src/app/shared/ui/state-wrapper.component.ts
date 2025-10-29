@@ -21,7 +21,7 @@ import { EmptyStateComponent } from './empty-state.component';
     </div>
 
     <div *ngIf="error" class="center">
-      <div class="error">
+      <div class="error" role="alert" aria-live="assertive">
         <strong>Something went wrong</strong>
         <p *ngIf="errorMessage">{{ errorMessage }}</p>
       </div>
@@ -35,15 +35,17 @@ import { EmptyStateComponent } from './empty-state.component';
     .center {
       display: grid;
       place-items: center;
-      padding: 1.25rem;
+      padding: var(--space-5);
     }
     .error {
       color: var(--error);
-      background: #fff1f2;
+      background: var(--error-100);
       border: 1px solid #fecdd3;
       border-radius: var(--radius-md);
-      padding: 1rem;
+      padding: var(--space-4);
       text-align: center;
+      max-width: 720px;
+      width: 100%;
     }
   `]
 })

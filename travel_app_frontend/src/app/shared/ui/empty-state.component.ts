@@ -11,8 +11,8 @@ import { ButtonComponent } from './button.component';
   standalone: true,
   imports: [CommonModule, ButtonComponent],
   template: `
-    <div class="empty">
-      <div class="icon">🌊</div>
+    <div class="empty u-gradient-soft">
+      <div class="icon" aria-hidden="true">🌊</div>
       <h2>{{ title }}</h2>
       <p *ngIf="description">{{ description }}</p>
       <ui-button *ngIf="actionLabel" (click)="onActionClick()" [variant]="'primary'">{{ actionLabel }}</ui-button>
@@ -21,23 +21,22 @@ import { ButtonComponent } from './button.component';
   styles: [`
     .empty {
       text-align: center;
-      background: linear-gradient(135deg, var(--primary-50), #ffffff);
       border: 1px dashed var(--border);
       color: var(--muted);
-      padding: 2rem 1rem;
+      padding: var(--space-6) var(--space-4);
       border-radius: var(--radius-lg);
     }
     .icon {
       font-size: 2rem;
-      margin-bottom: .5rem;
+      margin-bottom: var(--space-2);
     }
     h2 {
       color: var(--text);
-      margin-bottom: .25rem;
+      margin-bottom: var(--space-1);
       font-size: 1.25rem;
     }
     p {
-      margin-bottom: .75rem;
+      margin-bottom: var(--space-3);
     }
   `]
 })

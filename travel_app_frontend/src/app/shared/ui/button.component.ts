@@ -24,16 +24,28 @@ import { Component, Input } from '@angular/core';
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: .5rem;
+      gap: var(--space-2);
       font-weight: 600;
       border-radius: var(--radius-md);
       padding: .6rem 1rem;
-      border: 1px solid transparent;
+      border: 1px solid var(--border);
       cursor: pointer;
-      transition: background 150ms ease, color 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+      transition: background var(--transition-base) ease, color var(--transition-base) ease,
+                  box-shadow var(--transition-base) ease, border-color var(--transition-base) ease, transform var(--transition-fast) ease;
       color: var(--text);
       background: var(--surface);
-      border-color: var(--border);
+    }
+    .btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: var(--elevation-1);
+    }
+    .btn:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: var(--elevation-0);
+    }
+    .btn:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
     }
     .btn:disabled {
       opacity: .6;
@@ -41,25 +53,33 @@ import { Component, Input } from '@angular/core';
     }
     .btn-primary {
       background: var(--primary);
-      color: white;
+      color: var(--text-inverse);
+      border-color: var(--primary-700);
       box-shadow: var(--elevation-1);
-      border-color: var(--primary-600);
     }
-    .btn-primary:hover { background: var(--primary-600); }
+    .btn-primary:hover:not(:disabled) { background: var(--primary-700); }
     .btn-secondary {
       background: var(--secondary-100);
       color: var(--secondary-800);
       border-color: var(--secondary-300);
     }
-    .btn-secondary:hover { background: var(--secondary-200); }
+    .btn-secondary:hover:not(:disabled) { background: var(--secondary-200); }
     .btn-ghost {
       background: transparent;
       color: var(--primary-700);
       border-color: transparent;
     }
-    .btn-ghost:hover {
+    .btn-ghost:hover:not(:disabled) {
       background: var(--primary-50);
       border-color: var(--primary-100);
+    }
+
+    /* Reduced motion respect */
+    @media (prefers-reduced-motion: reduce) {
+      .btn, .btn:hover, .btn:active {
+        transition: none !important;
+        transform: none !important;
+      }
     }
   `]
 })

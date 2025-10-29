@@ -10,11 +10,17 @@
   max-width: 1200px;
   margin: 0 auto;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   text-align: center;
 }
 
 .accent {
   color: var(--secondary);
   font-weight: 600;
+}
+
+.footer a:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
 }

@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="loader" [style.--size.px]="size">
+    <div class="loader" [style.--size.px]="size" role="status" aria-live="polite" aria-busy="true">
       <div class="spinner"></div>
       <span *ngIf="label" class="label">{{ label }}</span>
     </div>
@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
     .loader {
       display: inline-flex;
       align-items: center;
-      gap: .5rem;
+      gap: var(--space-2);
       color: var(--muted);
     }
     .spinner {
@@ -31,10 +31,15 @@ import { CommonModule } from '@angular/common';
       animation: spin 1s linear infinite;
     }
     .label {
-      font-size: .9rem;
+      font-size: .95rem;
     }
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .spinner {
+        animation-duration: 3s;
+      }
     }
   `]
 })

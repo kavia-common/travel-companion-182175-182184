@@ -1,6 +1,6 @@
 :root {
-  /* Ocean Professional Palette */
-  --primary: #2563EB;        /* blue-600 */
+  /* Ocean Professional Palette (refined) */
+  --primary: #2563EB; /* blue-600 */
   --primary-50: #EFF6FF;
   --primary-100: #DBEAFE;
   --primary-200: #BFDBFE;
@@ -10,30 +10,71 @@
   --primary-600: #2563EB;
   --primary-700: #1D4ED8;
   --primary-800: #1E40AF;
+  --primary-900: #1E3A8A;
 
-  --secondary: #F59E0B;      /* amber-500 */
+  --secondary: #F59E0B; /* amber-500 */
+  --secondary-50: #FFFBEB;
   --secondary-100: #FEF3C7;
   --secondary-200: #FDE68A;
   --secondary-300: #FCD34D;
+  --secondary-400: #FBBF24;
+  --secondary-700: #B45309;
   --secondary-800: #92400E;
 
-  --error: #EF4444;
-  --success: #10B981;
+  --success: #10B981; /* teal-500 */
+  --success-100: #D1FAE5;
 
-  --background: #f9fafb;     /* gray-50 */
-  --surface: #ffffff;
+  --error: #EF4444; /* red-500 */
+  --error-100: #FEE2E2;
 
-  --text: #111827;           /* gray-900 */
-  --muted: #6B7280;          /* gray-500 */
-  --border: #E5E7EB;         /* gray-200 */
+  --warning: #F59E0B;
+  --warning-100: #FEF3C7;
 
+  --background: #F9FAFB; /* gray-50 */
+  --surface: #FFFFFF;
+
+  --text: #111827; /* gray-900 */
+  --text-inverse: #FFFFFF;
+  --muted: #6B7280; /* gray-500 */
+  --border: #E5E7EB; /* gray-200 */
+  --border-strong: #D1D5DB; /* gray-300 */
+
+  /* Spacing scale (4pt baseline) */
+  --space-0: 0;
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem;  /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem;    /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem;  /* 24px */
+  --space-8: 2rem;    /* 32px */
+  --space-10: 2.5rem; /* 40px */
+
+  /* Radius */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-full: 9999px;
 
+  /* Elevation */
   --elevation-0: 0 0 0 rgba(0,0,0,0);
   --elevation-1: 0 2px 8px rgba(0,0,0,0.06);
   --elevation-2: 0 6px 18px rgba(0,0,0,0.08);
+  --elevation-3: 0 12px 28px rgba(0,0,0,0.12);
+
+  /* Focus ring tokens */
+  --focus-ring-color: rgba(37, 99, 235, 0.35);
+  --focus-ring: 0 0 0 4px var(--focus-ring-color);
+
+  /* Transitions & motion */
+  --transition-fast: 120ms;
+  --transition-base: 180ms;
+  --transition-slow: 260ms;
+
+  /* Gradient utilities */
+  --gradient-soft: linear-gradient(135deg, rgba(59,130,246,0.10), #FFFFFF);
+  --gradient-ocean: linear-gradient(135deg, rgba(59,130,246,0.16), rgba(249,250,251,1));
 }
 
 html, body {
@@ -44,4 +85,31 @@ html, body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+/* Utilities */
+.u-surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elevation-1);
+}
+
+.u-gradient-soft {
+  background-image: var(--gradient-soft);
+}
+
+/* Focus visible outline */
+:where(a, button, input, select, textarea, [tabindex]):where(:not([tabindex="-1"])):focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }

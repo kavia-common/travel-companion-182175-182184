@@ -5,6 +5,7 @@
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   box-shadow: var(--elevation-1);
+  backdrop-filter: saturate(180%) blur(4px);
 }
 
 .header .container {
@@ -22,6 +23,11 @@
   text-decoration: none;
   letter-spacing: 0.2px;
 }
+.brand:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
 
 nav {
   display: flex;
@@ -33,26 +39,33 @@ nav a {
   text-decoration: none;
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius-md);
-  transition: background 150ms ease, color 150ms ease;
+  transition: background var(--transition-base) ease, color var(--transition-base) ease, box-shadow var(--transition-base) ease;
 }
-
 nav a:hover {
   background: var(--primary-50);
   color: var(--primary-700);
 }
-
 nav a.active {
   background: var(--primary-100);
   color: var(--primary-800);
+}
+nav a:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
 }
 
 .nav-toggle {
   display: none;
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
+  border-radius: var(--radius-sm);
+  padding: 4px;
 }
-
+.nav-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
 .nav-toggle span {
   display: block;
   width: 22px;

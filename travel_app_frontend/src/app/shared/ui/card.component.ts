@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <section class="card" [class.clickable]="clickable">
+    <section class="card" [class.clickable]="clickable" tabindex="0">
       <header *ngIf="title" class="card-header">
         <h3>{{ title }}</h3>
         <div class="card-actions">
@@ -29,11 +29,16 @@ import { CommonModule } from '@angular/common';
       border-radius: var(--radius-lg);
       box-shadow: var(--elevation-1);
       overflow: hidden;
-      transition: transform 150ms ease, box-shadow 150ms ease;
+      transition: transform var(--transition-base) ease, box-shadow var(--transition-base) ease, border-color var(--transition-base) ease;
+    }
+    .card:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
     }
     .card.clickable:hover {
       transform: translateY(-2px);
       box-shadow: var(--elevation-2);
+      border-color: var(--border-strong);
     }
     .card-header {
       display: flex;
@@ -53,7 +58,14 @@ import { CommonModule } from '@angular/common';
     }
     .card-actions {
       display: inline-flex;
-      gap: .5rem;
+      gap: var(--space-2);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card, .card.clickable:hover {
+        transition: none !important;
+        transform: none !important;
+      }
     }
   `]
 })
